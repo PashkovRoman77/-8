@@ -1,55 +1,36 @@
-# Prerequisites
-*.d
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+unsigned long long factorial(int n) {
+    unsigned long long result = 1;
+    for (int i = 2; i <= n; ++i)
+        result *= i;
+    return result;
+}
 
-# Linker output
-*.ilk
-*.map
-*.exp
+int main() {
+    char word[15]; 
+    int count[256] = {0}; 
 
-# Precompiled Headers
-*.gch
-*.pch
+    printf("Введіть слово: ");
+    scanf("%s", word);
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+    int length = strlen(word);
+    
+    for (int i = 0; i < length; ++i) {
+        word[i] = toupper(word[i]); 
+        count[(int)word[i]]++;
+    }
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+    unsigned long long total = factorial(length);
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+    for (int i = 0; i < 256; ++i) {
+        if (count[i] > 1)
+            total /= factorial(count[i]);
+    }
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+    printf("Кількість анаграм: %llu\n", total);
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
-
-# debug information files
-*.dwo
+    return 0;
+}
